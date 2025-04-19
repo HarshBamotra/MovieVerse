@@ -76,11 +76,13 @@
       <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
         {% for movie in upcoming_movies %}
           <div class="bg-white rounded shadow hover:shadow-lg transition">
-            <img src="{{ movie.poster.url }}" class="rounded-t w-full h-60 object-cover">
-            <div class="p-4">
-              <h3 class="text-lg font-medium">{{ movie.name }}</h3>
-              <p class="text-sm text-gray-600">Releasing on {{ movie.release_date }}</p>
-            </div>
+            <a href="/movie/{{ movie.id }}/">
+              <img src="{{ movie.poster.url }}" class="rounded-t w-full h-60 object-cover">
+              <div class="p-4">
+                <h3 class="text-lg font-medium">{{ movie.name }}</h3>
+                <p class="text-sm text-gray-600">Releasing on {{ movie.release_date }}</p>
+              </div>
+            </a>
           </div>
         {% endfor %}
       </div>

@@ -14,7 +14,13 @@ class OffersAdmin(admin.ModelAdmin):
     list_filter = ["title", "category"]
 
 
-admin.site.register(Booking)
+class BookingAdmin(admin.ModelAdmin):
+    search_fields = ["user", "movie"]
+    list_display = ["full_name", "email", "phone", "seats", "booked_at"]
+    list_filter = ["user", "movie"]
+
+
 admin.site.register(Movies, MoviesAdmin)
 admin.site.register(Offers, OffersAdmin)
+admin.site.register(Booking, BookingAdmin)
 
