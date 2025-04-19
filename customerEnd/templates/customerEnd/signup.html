@@ -1,0 +1,124 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sign Up - MovieVerse</title>
+  <link rel="icon" type="image/x-icon" href="{% static 'logo.png' %}">
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+  <style>
+    nav img{
+      transform: scale(2);
+    }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-900">
+
+  <!-- Navbar -->
+  <nav class="bg-gray-900 text-white px-6 py-4 flex items-center justify-between">
+    <div class="flex items-center space-x-4">
+      <img src="{% static 'logo.png' %}" alt="Logo" class="h-8" />
+      <span class="text-xl font-semibold">MovieVerse</span>
+    </div>
+    <ul class="hidden md:flex space-x-6 text-sm font-medium">
+        <li><a href="/" class="hover:text-red-500">Home</a></li>
+        <li><a href="/movies/" class="hover:text-red-500">Movies</a></li>
+        <li><a href="/offers/" class="font-semibold">Offers</a></li>
+      </ul>
+      <div class="flex items-center space-x-4">
+        <a href="/login/" class="text-sm hover:text-red-500">Login</a>
+        <a href="/signup/" class="bg-red-600 px-4 py-2 rounded hover:bg-red-700 text-sm">Sign Up</a>
+      </div>
+  </nav>
+
+  <!-- Signup Form Section -->
+  <section class="flex items-center justify-center py-16 px-6 bg-gray-100">
+    <div class="bg-white p-8 rounded shadow-lg w-full max-w-md">
+      <h2 class="text-2xl font-semibold mb-6 text-gray-800 text-center">Create your account</h2>
+
+      <form method="POST" action="/signup/" class="space-y-5">
+        {% csrf_token %}
+
+        <div>
+          <label for="username" class="block text-sm font-medium text-gray-700">Username</label>
+          <input type="text" name="username" id="username" required
+                 class="w-full mt-1 px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-red-500" />
+        </div>
+
+        <div>
+          <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
+          <input type="email" name="email" id="email" required
+                 class="w-full mt-1 px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-red-500" />
+        </div>
+
+        <div>
+          <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
+          <input type="password" name="password" id="password" required
+                 class="w-full mt-1 px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-red-500" />
+        </div>
+
+        <div>
+          <label for="confirm_password" class="block text-sm font-medium text-gray-700">Confirm Password</label>
+          <input type="password" name="confirm_password" id="confirm_password" required
+                 class="w-full mt-1 px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-red-500" />
+        </div>
+
+        <button type="submit"
+                class="w-full bg-red-600 text-white py-2 px-4 rounded hover:bg-red-700 transition">
+          Sign Up
+        </button>
+      </form>
+
+      <p class="text-sm text-center text-gray-600 mt-6">
+        Already have an account?
+        <a href="#" class="text-red-600 hover:underline">Log in</a>
+      </p>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-gray-900 text-white px-6 py-10 mt-10">
+    <div class="max-w-6xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-6">
+      <div>
+        <h4 class="font-semibold mb-3">MovieVerse</h4>
+        <p class="text-sm text-gray-400">Your one-stop destination for booking movies, events, and more.</p>
+      </div>
+
+      <div>
+        <h4 class="font-semibold mb-3">Explore</h4>
+        <ul class="text-sm space-y-2 text-gray-400">
+            <li><a href="/movies/" class="hover:text-white">Now Showing</a></li>
+            <li><a href="/movies/" class="hover:text-white">Upcoming</a></li>
+            <li><a href="/offers/" class="hover:text-white">Offers</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4 class="font-semibold mb-3">Company</h4>
+        <ul class="text-sm space-y-2 text-gray-400">
+          <li><a href="#" class="hover:text-white">About Us</a></li>
+          <li><a href="#" class="hover:text-white">Contact</a></li>
+          <li><a href="#" class="hover:text-white">Careers</a></li>
+          <li><a href="#" class="hover:text-white">Privacy Policy</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4 class="font-semibold mb-3">Follow Us</h4>
+        <div class="flex space-x-4 text-sm text-gray-400">
+          <a href="#" class="hover:text-white">Facebook</a>
+          <a href="#" class="hover:text-white">Twitter</a>
+          <a href="#" class="hover:text-white">Instagram</a>
+          <a href="#" class="hover:text-white">YouTube</a>
+        </div>
+      </div>
+    </div>
+    <div class="text-center text-sm text-gray-500 mt-8">
+      © 2025 MovieVerse. All rights reserved.
+    </div>
+  </footer>
+
+</body>
+</html>

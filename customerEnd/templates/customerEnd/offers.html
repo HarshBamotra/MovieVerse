@@ -1,0 +1,107 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Offers - MovieVerse</title>
+  <link rel="icon" type="image/x-icon" href="{% static 'logo.png' %}">
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+  <style>
+    nav img {
+      transform: scale(2);
+    }
+  </style>
+</head>
+<body class="bg-gray-100 text-gray-900">
+
+  <!-- Navbar -->
+  <nav class="bg-gray-900 text-white px-6 py-4 flex items-center justify-between">
+    <div class="flex items-center space-x-4">
+      <img src="{% static 'logo.png' %}" alt="Logo" class="h-8" />
+      <span class="text-xl font-semibold">MovieVerse</span>
+    </div>
+  
+    <ul class="hidden md:flex space-x-6 text-sm font-medium">
+      <li><a href="/" class="{% if request.path == '/' %}text-red-500{% else %}hover:text-red-500{% endif %}">Home</a></li>
+      <li><a href="/movies/" class="{% if request.path == '/movies/' %}text-red-500{% else %}hover:text-red-500{% endif %}">Movies</a></li>
+      <li><a href="/offers/" class="{% if request.path == '/offers/' %}text-red-500{% else %}hover:text-red-500{% endif %}">Offers</a></li>
+    </ul>
+  
+    <div class="flex items-center space-x-4">
+      {% if user.is_authenticated %}
+        <span class="text-sm text-gray-300">Hi, {{ user.username }}</span>
+        <a href="/logout/" class="text-sm hover:text-red-500">Logout</a>
+      {% else %}
+        <a href="/login/" class="text-sm hover:text-red-500">Login</a>
+        <a href="/signup/" class="bg-red-600 px-4 py-2 rounded hover:bg-red-700 text-sm">Sign Up</a>
+      {% endif %}
+    </div>
+  </nav>
+
+  <!-- Offers Section -->
+  <section class="px-6 py-10 max-w-6xl mx-auto">
+    <h2 class="text-2xl font-semibold mb-6 text-gray-800">Latest Offers & Deals</h2>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <!-- Offer Card -->
+      {% for offer in offers %}
+      <div class="bg-white rounded-lg shadow hover:shadow-lg transition overflow-hidden">
+        <img src="{{ offer.image.url }}" alt="{{ offer.title }}" class="w-full h-48 object-cover" />
+        <div class="p-4">
+          <h3 class="text-lg font-semibold text-gray-900">{{ offer.title }}</h3>
+          <p class="text-sm text-gray-600 mt-2">{{ offer.description }}</p>
+          <a href="#" class="inline-block mt-4 text-red-600 hover:underline text-sm">Know More</a>
+        </div>
+      </div>
+      {% empty %}
+        <p class="text-gray-500">No offers available at the moment.</p>
+      {% endfor %}
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-gray-900 text-white px-6 py-10 mt-10">
+    <div class="max-w-6xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-6">
+      <div>
+        <h4 class="font-semibold mb-3">MovieVerse</h4>
+        <p class="text-sm text-gray-400">Your one-stop destination for booking movies, events, and more.</p>
+      </div>
+
+      <div>
+        <h4 class="font-semibold mb-3">Explore</h4>
+        <ul class="text-sm space-y-2 text-gray-400">
+          <li><a href="/movies/" class="hover:text-white">Now Showing</a></li>
+          <li><a href="/movies/" class="hover:text-white">Upcoming</a></li>
+          <li><a href="/offers/" class="hover:text-white">Offers</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4 class="font-semibold mb-3">Company</h4>
+        <ul class="text-sm space-y-2 text-gray-400">
+          <li><a href="#" class="hover:text-white">About Us</a></li>
+          <li><a href="#" class="hover:text-white">Contact</a></li>
+          <li><a href="#" class="hover:text-white">Careers</a></li>
+          <li><a href="#" class="hover:text-white">Privacy Policy</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4 class="font-semibold mb-3">Follow Us</h4>
+        <div class="flex space-x-4 text-sm text-gray-400">
+          <a href="#" class="hover:text-white">Facebook</a>
+          <a href="#" class="hover:text-white">Twitter</a>
+          <a href="#" class="hover:text-white">Instagram</a>
+          <a href="#" class="hover:text-white">YouTube</a>
+        </div>
+      </div>
+    </div>
+    <div class="text-center text-sm text-gray-500 mt-8">
+      © 2025 MovieVerse. All rights reserved.
+    </div>
+  </footer>
+
+</body>
+</html>

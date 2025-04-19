@@ -1,0 +1,158 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>MovieVerse - Book Movies Online</title>
+  <link rel="icon" type="image/x-icon" href="{% static 'logo.png' %}">
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+  <style>
+      nav img{
+        transform: scale(2);
+      }
+  </style>
+  <script>
+    function toggleMovies(type) {
+      const showingSection = document.getElementById('showing-section');
+      const upcomingSection = document.getElementById('upcoming-section');
+      const showingBtn = document.getElementById('toggle-showing');
+      const upcomingBtn = document.getElementById('toggle-upcoming');
+
+      if (type === 'showing') {
+        showingSection.classList.remove('hidden');
+        upcomingSection.classList.add('hidden');
+        showingBtn.classList.add('bg-red-600', 'text-white');
+        showingBtn.classList.remove('bg-gray-300', 'text-gray-800');
+        upcomingBtn.classList.add('bg-gray-300', 'text-gray-800');
+        upcomingBtn.classList.remove('bg-red-600', 'text-white');
+      } else {
+        showingSection.classList.add('hidden');
+        upcomingSection.classList.remove('hidden');
+        upcomingBtn.classList.add('bg-red-600', 'text-white');
+        upcomingBtn.classList.remove('bg-gray-300', 'text-gray-800');
+        showingBtn.classList.add('bg-gray-300', 'text-gray-800');
+        showingBtn.classList.remove('bg-red-600', 'text-white');
+      }
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      toggleMovies('showing');
+    });
+  </script>
+</head>
+<body class="bg-gray-100 text-gray-900">
+
+  <!-- Navbar -->
+  <nav class="bg-gray-900 text-white px-6 py-4 flex items-center justify-between">
+    <div class="flex items-center space-x-4">
+      <img src="{% static 'logo.png' %}" alt="Logo" class="h-8" />
+      <span class="text-xl font-semibold">MovieVerse</span>
+    </div>
+  
+    <ul class="hidden md:flex space-x-6 text-sm font-medium">
+      <li><a href="/" class="{% if request.path == '/' %}text-red-500{% else %}hover:text-red-500{% endif %}">Home</a></li>
+      <li><a href="/movies/" class="{% if request.path == '/movies/' %}text-red-500{% else %}hover:text-red-500{% endif %}">Movies</a></li>
+      <li><a href="/offers/" class="{% if request.path == '/offers/' %}text-red-500{% else %}hover:text-red-500{% endif %}">Offers</a></li>
+    </ul>
+  
+    <div class="flex items-center space-x-4">
+      {% if user.is_authenticated %}
+        <span class="text-sm text-gray-300">Hi, {{ user.username }}</span>
+        <a href="/logout/" class="text-sm hover:text-red-500">Logout</a>
+      {% else %}
+        <a href="/login/" class="text-sm hover:text-red-500">Login</a>
+        <a href="/signup/" class="bg-red-600 px-4 py-2 rounded hover:bg-red-700 text-sm">Sign Up</a>
+      {% endif %}
+    </div>
+  </nav>
+
+  <!-- Toggle Buttons -->
+  <div class="flex justify-center space-x-4 mt-10">
+    <button id="toggle-showing" onclick="toggleMovies('showing')" class="px-4 py-2 rounded">Now Showing</button>
+    <button id="toggle-upcoming" onclick="toggleMovies('upcoming')" class="px-4 py-2 rounded">Upcoming</button>
+  </div>
+
+  <!-- Showing Movies Section -->
+  <section id="showing-section" class="px-6 py-10">
+    <h2 class="text-2xl font-bold mb-6">Now Showing</h2>
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+      {% for movie in showing_movies %}
+        <div class="bg-white rounded shadow hover:shadow-lg transition">
+          <img src="{{ movie.poster.url }}" alt="{{ movie.name }}" class="rounded-t w-full h-60 object-cover">
+          <div class="p-4">
+            <h3 class="text-lg font-semibold text-gray-900">{{ movie.name }}</h3>
+            <p class="text-sm text-gray-700 mt-1">Release: {{ movie.release_date }}</p>
+            <a href="#" class="text-red-600 hover:underline text-sm mt-2 inline-block">Book Now</a>
+          </div>
+        </div>
+      {% empty %}
+        <p class="text-gray-400">No movies available right now.</p>
+      {% endfor %}
+    </div>
+  </section>
+
+  <!-- Upcoming Movies Section -->
+  <section id="upcoming-section" class="px-6 py-10 hidden">
+    <h2 class="text-2xl font-bold mb-6">Upcoming Movies</h2>
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+      {% for movie in upcoming_movies %}
+        <div class="bg-white rounded shadow hover:shadow-lg transition">
+          <img src="{{ movie.poster.url }}" alt="{{ movie.name }}" class="rounded-t w-full h-60 object-cover">
+          <div class="p-4">
+            <h3 class="text-lg font-semibold text-gray-900">{{ movie.name }}</h3>
+            <p class="text-sm text-gray-700 mt-1">Release: {{ movie.release_date }}</p>
+            <a href="#" class="text-red-600 hover:underline text-sm mt-2 inline-block">View Details</a>
+          </div>
+        </div>
+      {% empty %}
+        <p class="text-gray-400">No upcoming movies listed.</p>
+      {% endfor %}
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-gray-900 text-white px-6 py-10 mt-10">
+    <div class="max-w-6xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-6">
+      <div>
+        <h4 class="font-semibold mb-3">MovieVerse</h4>
+        <p class="text-sm text-gray-400">Your one-stop destination for booking movies, events, and more.</p>
+      </div>
+
+      <div>
+        <h4 class="font-semibold mb-3">Explore</h4>
+        <ul class="text-sm space-y-2 text-gray-400">
+            <li><a href="/movies/" class="hover:text-white">Now Showing</a></li>
+            <li><a href="/movies/" class="hover:text-white">Upcoming</a></li>
+            <li><a href="/offers/" class="hover:text-white">Offers</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4 class="font-semibold mb-3">Company</h4>
+        <ul class="text-sm space-y-2 text-gray-400">
+          <li><a href="#" class="hover:text-white">About Us</a></li>
+          <li><a href="#" class="hover:text-white">Contact</a></li>
+          <li><a href="#" class="hover:text-white">Careers</a></li>
+          <li><a href="#" class="hover:text-white">Privacy Policy</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4 class="font-semibold mb-3">Follow Us</h4>
+        <div class="flex space-x-4 text-sm text-gray-400">
+          <a href="#" class="hover:text-white">Facebook</a>
+          <a href="#" class="hover:text-white">Twitter</a>
+          <a href="#" class="hover:text-white">Instagram</a>
+          <a href="#" class="hover:text-white">YouTube</a>
+        </div>
+      </div>
+    </div>
+    <div class="text-center text-sm text-gray-500 mt-8">
+      © 2025 MovieVerse. All rights reserved.
+    </div>
+  </footer>
+
+</body>
+</html>
