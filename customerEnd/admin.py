@@ -15,9 +15,12 @@ class OffersAdmin(admin.ModelAdmin):
 
 
 class BookingAdmin(admin.ModelAdmin):
-    search_fields = ["user", "movie"]
-    list_display = ["full_name", "email", "phone", "seats", "booked_at"]
-    list_filter = ["user", "movie"]
+    search_fields = ["user", "get_movie_title"]
+    list_display = ["full_name", "get_movie_title", "email", "phone", "seats", "booked_at"]
+    list_filter = ["user"]
+
+    def get_movie_title(self, obj):
+        return obj.movie.name  
 
 
 admin.site.register(Movies, MoviesAdmin)
