@@ -33,4 +33,6 @@ class Booking(models.Model):
     show_date = models.DateField()
     show_time = models.TimeField()
     seats = models.CharField(max_length=100)
+    numseats = models.CharField(max_length=100, default='1')
+    payment_mothod = models.CharField(max_length=100, default='UPI')
     booked_at = models.DateTimeField(auto_now_add=True)

@@ -6,3 +6,4 @@ _*
 *.env
 z*.py
 media
+migrations

@@ -147,6 +147,8 @@ def confirm_booking(request, movie_id):
         full_name = request.POST.get('full_name')
         email = request.POST.get('email')
         phone = request.POST.get('phone')
+        no_of_seats = request.POST.get('seats')
+        payment_mothod = request.POST.get('payment_method')
 
         # Optional: get show_date, time, seats from frontend or pre-filled values
         show_date = '2025-04-28'  # example static
@@ -161,7 +163,9 @@ def confirm_booking(request, movie_id):
             phone=phone,
             show_date=show_date,
             show_time=show_time,
-            seats=seats
+            seats=seats,
+            numseats = no_of_seats,
+            payment_mothod = payment_mothod
         )
         return render(request, 'customerEnd/bookingConfirm.html', {'booking': booking})
 
